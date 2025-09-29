@@ -1,13 +1,25 @@
 import dotenv from "dotenv";
 import { Server } from "http";
 import app from "./app";
+import { prisma } from "./config/db";
 
 dotenv.config();
 
 let server: Server;
 
+async function connectToDB() {
+  try {
+    await prisma.$connect();
+    console.log(`Database is connected successfully`);
+  } catch (error) {
+    console.log(`There was an error happened to connect database`);
+    process.exit(1);
+  }
+}
+
 const startServer = async () => {
   try {
+    await connectToDB();
     server = app.listen(process.env.PORT, () => {
       console.log(
         `Portfolio assignment backend server is listening on port ${process.env.PORT}`
