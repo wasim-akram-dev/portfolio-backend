@@ -9,7 +9,35 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  password  String
+  role      String   @default("OWNER")
+  createdAt DateTime @default(now())
+}
+
+model Blog {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String   // store HTML or markdown (if using rich editor)
+  published   Boolean  @default(true)
+  coverUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  description String
+  features    String[] // array of strings
+  thumbnail   String?
+  liveUrl     String?
+  repoUrl     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
