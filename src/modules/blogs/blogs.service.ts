@@ -1,4 +1,13 @@
+import { Blog, Prisma } from "@prisma/client";
 import { prisma } from "../../config/db";
+
+const createBlog = async (payload: Prisma.BlogCreateInput): Promise<Blog> => {
+  const createdBlog = await prisma.blog.create({
+    data: payload,
+  });
+
+  return createdBlog;
+};
 
 const getAllBlogs = async () => {
   const blogs = await prisma.blog.findMany({
@@ -12,4 +21,4 @@ const getBlogBySlug = async (slug: string) => {
   return blog;
 };
 
-export const BlogsServices = { getAllBlogs, getBlogBySlug };
+export const BlogsServices = { createBlog, getAllBlogs, getBlogBySlug };

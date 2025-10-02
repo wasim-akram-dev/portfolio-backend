@@ -1,6 +1,19 @@
 import { Request, Response } from "express";
 import { BlogsServices } from "./blogs.service";
 
+const createBlog = async (req: Request, res: Response) => {
+  try {
+    const result = await BlogsServices.createBlog(req.body);
+    res.status(201).json({
+      success: true,
+      message: `Blog created Successfully`,
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getAllBlogs = async (req: Request, res: Response) => {
   try {
     const blogs = await BlogsServices.getAllBlogs();
@@ -24,7 +37,7 @@ const getBlogBySlug = async (req: Request, res: Response) => {
     if (!blog) return res.status(404).json({ message: "Not found" });
     res.status(200).json({
       success: true,
-      message: "Retrieved all blogs successfully",
+      message: "Blog Retrieved successfully",
       blog,
     });
   } catch (error) {
@@ -35,4 +48,4 @@ const getBlogBySlug = async (req: Request, res: Response) => {
   }
 };
 
-export const BlogsControllers = { getAllBlogs, getBlogBySlug };
+export const BlogsControllers = { createBlog, getAllBlogs, getBlogBySlug };
