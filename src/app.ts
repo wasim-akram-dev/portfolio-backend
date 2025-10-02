@@ -3,6 +3,7 @@ import express from "express";
 import { errorHandler } from "./middlewares/errorHandler";
 import { notFound } from "./middlewares/notFound";
 import { BlogsRoutes } from "./modules/blogs/blogs.route";
+import { ProjectsRoutes } from "./modules/projects/projects.route";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(
 );
 
 app.use("/api/v1/blogs", BlogsRoutes);
+app.use("/api/v1/projects", ProjectsRoutes);
 
 app.get("/", (req, res) => {
   res.send("Portfolio assignment backend server is running!!");
