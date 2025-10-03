@@ -21,4 +21,29 @@ const getBlogBySlug = async (slug: string) => {
   return blog;
 };
 
-export const BlogsServices = { createBlog, getAllBlogs, getBlogBySlug };
+const updateABlogByID = async (id: number, payload: Partial<Blog>) => {
+  const updatedBlog = await prisma.blog.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+  return updatedBlog;
+};
+
+const deleteABlogByID = async (id: number) => {
+  const deletedBlog = await prisma.blog.delete({
+    where: {
+      id,
+    },
+  });
+  return deletedBlog;
+};
+
+export const BlogsServices = {
+  createBlog,
+  getAllBlogs,
+  getBlogBySlug,
+  updateABlogByID,
+  deleteABlogByID,
+};
