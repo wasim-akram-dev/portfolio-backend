@@ -38,13 +38,17 @@ export const login = async (req: Request, res: Response) => {
     // Sign JWT token
     const token = jwt.sign(payload, secret, options);
 
+    console.log("Login successful, sending cookie...");
     // Send token via HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: true, // must be true on Vercel (HTTPS)
+      sameSite: "none", // must be "none" for cross-site cookies
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
+
+    // secure: process.env.NODE_ENV === "production",
+    // sameSite: "lax",
 
     return res.json({
       message: "Logged in",
@@ -76,6 +80,6 @@ export const me = async (req: Request, res: Response) => {
   if (!user) {
     return res.status(401).json({ message: "Not authenticated" });
   }
-
+  console.log("Cookies:", req.cookies);
   return res.json({ user });
 };

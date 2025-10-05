@@ -15,8 +15,11 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "https://wasim-akram.vercel.app",
-    credentials: true,
+    origin: [
+      "https://wasim-akram.vercel.app", // frontend
+      "http://localhost:3000", // for local dev
+    ],
+    credentials: true, // important: allows cookies
   })
 );
 
