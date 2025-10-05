@@ -23,8 +23,29 @@ const getProjectBySlug = async (slug: string) => {
   return project;
 };
 
+const updateAProjectByID = async (id: number, payload: Partial<Project>) => {
+  const updatedProject = await prisma.project.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+  return updatedProject;
+};
+
+const deleteAProjectByID = async (id: number) => {
+  const deletedProject = await prisma.project.delete({
+    where: {
+      id,
+    },
+  });
+  return deletedProject;
+};
+
 export const ProjectsServices = {
   createProject,
   getAllProjects,
   getProjectBySlug,
+  updateAProjectByID,
+  deleteAProjectByID,
 };

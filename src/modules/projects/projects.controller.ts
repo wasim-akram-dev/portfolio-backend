@@ -7,7 +7,7 @@ const createProject = async (req: Request, res: Response) => {
     res.status(201).json({
       success: true,
       message: `Project created Successfully`,
-      data: result,
+      project: result,
     });
   } catch (error) {
     console.log(error);
@@ -48,8 +48,47 @@ const getProjectBySlug = async (req: Request, res: Response) => {
   }
 };
 
+const updateAProjectByID = async (req: Request, res: Response) => {
+  try {
+    const updatedProject = await ProjectsServices.updateAProjectByID(
+      Number(req.params.id),
+      req.body
+    );
+    res.status(200).json({
+      success: true,
+      message: `Project Updated Successfully`,
+      updatedProject,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: `Invalid ID`,
+    });
+  }
+};
+
+const deleteAProjectByID = async (req: Request, res: Response) => {
+  try {
+    const deletedProject = await ProjectsServices.deleteAProjectByID(
+      Number(req.params.id)
+    );
+    res.status(200).json({
+      success: true,
+      message: `Project deleted Successfully`,
+      deletedProject,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: `Invalid ID`,
+    });
+  }
+};
+
 export const ProjectsControllers = {
   createProject,
   getAllProjects,
   getProjectBySlug,
+  updateAProjectByID,
+  deleteAProjectByID,
 };
