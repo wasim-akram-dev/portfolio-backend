@@ -29,20 +29,43 @@ model Blog {
   updatedAt DateTime @updatedAt
 }
 
+enum ProjectCategory {
+  FULLSTACK
+  FRONTEND
+  BACKEND
+}
+
 model Project {
-  id           Int      @id @default(autoincrement())
-  title        String
-  slug         String   @unique
-  description  String
-  features     String[]
-  thumbnail    String
-  liveUrl      String
-  repoUrl      String
-  technologies String[]
-  category     String
-  challenges   String?
-  improvements String?
-  plans        String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id Int @id @default(autoincrement())
+
+  // Basic Info
+  title            String
+  slug             String @unique
+  shortDescription String // For cards / previews
+  description      String // Full project description
+
+  // Project Content
+  features    String[] // Key features list
+  challenges  String? // Optional
+  futurePlans String? // Optional improvements
+
+  // Classification
+  category     ProjectCategory @default(FULLSTACK)
+  technologies String[] // React, Node, PostgreSQL etc.
+
+  // Links
+  liveUrl         String? // Live deployed site
+  frontendRepoUrl String? // GitHub frontend
+  backendRepoUrl  String? // GitHub backend
+  repositoryUrl   String? // For single-repo projects
+
+  // Media
+  thumbnailUrl  String // Card image
+  coverImageUrl String? // Project details page banner
+  videoUrl      String? // Demo video (YouTube/Vimeo)
+  imageAltText  String
+
+  // Meta
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
